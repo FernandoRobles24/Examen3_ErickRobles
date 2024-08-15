@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              xmlns:system="clr-namespace:System;assembly=netstandard"
+             xmlns:local="clr-namespace:Examen3_ErickRobles.Converters"
+             x:Class="Examen3_ErickRobles.MainPage">
+
+    <StackLayout Padding="10">
+        <Entry x:Name="descripcionEntry" Placeholder="Descripción"/>
+        <DatePicker x:Name="fechaPicker" MinimumDate="{x:Static system:DateTime.Now}" />
+        <Image x:Name="photoImage" WidthRequest="100" HeightRequest="100" Aspect="AspectFill" />
+        <Button Text="Tomar Foto" Clicked="OnTakePhotoButtonClicked"/>
+        <Button Text="Agregar Nota" Clicked="OnAddNotaButtonClicked"/>
+
+        <CollectionView x:Name="notasCollectionView" ItemsSource="{Binding Notas}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="{Binding Descripcion}" />
+                        <Label Text="{Binding FechaFormateada}" />
+                        <Image Source="{Binding Photo_Record, Converter={StaticResource ByteArrayToImageSourceConverter}}" WidthRequest="50" HeightRequest="50"/>
+                        <Button Text="Editar" Clicked="OnEditNotaButtonClicked" CommandParameter="{Binding .}"/>
+                        <Button Text="Eliminar" Clicked="OnDeleteNotaButtonClicked" CommandParameter="{Binding .}"/>
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </StackLayout>
+</ContentPage>
