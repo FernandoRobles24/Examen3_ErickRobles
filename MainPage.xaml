@@ -3,25 +3,77 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
               xmlns:system="clr-namespace:System;assembly=netstandard"
              xmlns:local="clr-namespace:Examen3_ErickRobles.Converters"
-             x:Class="Examen3_ErickRobles.MainPage">
+             x:Class="Examen3_ErickRobles.MainPage"
+             Title="Gestión de Notas"
+             BackgroundColor="#f4f4f4">
 
-    <StackLayout Padding="10">
-        <Entry x:Name="descripcionEntry" Placeholder="Descripción"/>
-        <DatePicker x:Name="fechaPicker" MinimumDate="{x:Static system:DateTime.Now}" />
-        <Image x:Name="photoImage" WidthRequest="100" HeightRequest="100" Aspect="AspectFill" />
-        <Button Text="Tomar Foto" Clicked="OnTakePhotoButtonClicked"/>
-        <Button Text="Agregar Nota" Clicked="OnAddNotaButtonClicked"/>
+    <StackLayout Padding="20" 
+                 Spacing="10">
+        <Label Text="Descripción" 
+               Style="{StaticResource LabelStyle}" />
+        <Entry x:Name="descripcionEntry" 
+               Placeholder="Ingrese la descripción" 
+               Style="{StaticResource EntryStyle}" />
 
-        <CollectionView x:Name="notasCollectionView" ItemsSource="{Binding Notas}">
+        <Label Text="Fecha" 
+               Style="{StaticResource LabelStyle}" />
+        <DatePicker x:Name="fechaPicker" 
+                    Margin="10,5" 
+                    TextColor="Black"/>
+
+        <Image x:Name="photoImage" 
+               WidthRequest="100" 
+               HeightRequest="100" 
+               Aspect="AspectFill" 
+               BackgroundColor="LightGray" />
+
+        <Button Text="Tomar Foto" 
+                Clicked="OnTakePhotoButtonClicked" 
+                Style="{StaticResource ButtonStyle}" />
+
+        <Button Text="Guardar Nota" 
+                Clicked="OnAddNotaButtonClicked" 
+                Style="{StaticResource ButtonStyle}" />
+
+        <CollectionView x:Name="notasCollectionView" 
+                        ItemsSource="{Binding Notas}" 
+                        SelectionMode="None">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <StackLayout Orientation="Horizontal">
-                        <Label Text="{Binding Descripcion}" />
-                        <Label Text="{Binding FechaFormateada}" />
-                        <Image Source="{Binding Photo_Record, Converter={StaticResource ByteArrayToImageSourceConverter}}" WidthRequest="50" HeightRequest="50"/>
-                        <Button Text="Editar" Clicked="OnEditNotaButtonClicked" CommandParameter="{Binding .}"/>
-                        <Button Text="Eliminar" Clicked="OnDeleteNotaButtonClicked" CommandParameter="{Binding .}"/>
-                    </StackLayout>
+                    <Frame BorderColor="#ccc" 
+                           CornerRadius="10" 
+                           Padding="10" 
+                           Margin="0,5">
+                        <StackLayout Orientation="Vertical">
+                            <StackLayout Orientation="Horizontal" 
+                                         Spacing="10">
+                                <Label Text="{Binding Descripcion}" 
+                                       FontAttributes="Bold" 
+                                       Style="{StaticResource LabelStyle}"
+                                       VerticalOptions="Center" />
+                                <Label Text="{Binding FechaFormateada}" 
+                                       Style="{StaticResource LabelStyle}"
+                                       VerticalOptions="Center" />
+                            </StackLayout>
+                            <Image Source="{Binding Photo_Record, Converter={StaticResource ByteArrayToImageSourceConverter}}" 
+                                   WidthRequest="80" 
+                                   HeightRequest="80" 
+                                   Aspect="AspectFill" />
+                            <StackLayout Orientation="Horizontal" 
+                                         HorizontalOptions="End" 
+                                         Spacing="10">
+                                <Button Text="Editar" 
+                                        Clicked="OnEditNotaButtonClicked" 
+                                        CommandParameter="{Binding .}" 
+                                        Style="{StaticResource ButtonStyle}" 
+                                        WidthRequest="80"/>
+                                <Button Text="Eliminar" Clicked="OnDeleteNotaButtonClicked" 
+                                        CommandParameter="{Binding .}" Style="{StaticResource ButtonStyle}"
+                                        WidthRequest="80"
+                                        BackgroundColor="#e74c3c"/>
+                            </StackLayout>
+                        </StackLayout>
+                    </Frame>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
